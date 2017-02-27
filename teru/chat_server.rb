@@ -1,7 +1,7 @@
 # tcpserver program:
-#   ruby tcpserver.rb <PORT#>
+#   ruby chat_server.rb <PORT#>
 #  ex
-#   ruby tcpserver.rb 12345
+#   ruby chat_server.rb 12345
 
 require "socket"
 
@@ -30,6 +30,8 @@ while (true) do
     printf("(Server)Sent:[%s]@%s:%s\n", output.inspect, sock.peeraddr[2], sock.peeraddr[1])
     sock.puts(output)
   end
+
+  # Closing socket if the session is terminated
   printf("(Server)Socket Closed\n")
   sock.close
 end
