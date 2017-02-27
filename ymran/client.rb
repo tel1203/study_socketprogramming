@@ -6,20 +6,18 @@ port = 16151 #ARGV[1]
 sock = TCPSocket.open(host, port)
 
 def send(sock)
-	q= true
-	while q
+
+	while true
 		message = gets
 		
-		if message === '/quit' then
-			sock.write("user disconnected")
-			sock.close
-			q = false
-		end
+		break if message == "quit" 
 		sock.write(message)
 	end
+	sock.close
 end
 
 def recv(sock)
+	
 	while buf = sock.gets
 		puts buf
 	end	

@@ -5,6 +5,7 @@ port = ARGV[0].to_i
 s0 = TCPServer.open(port)
 #push the server in  the  socket list
 socks = []
+username = []
 socks.push(s0)
 
 while true
@@ -19,10 +20,22 @@ while true
 		#recv msg form a socket
 		else
 			#read the msg
-			buf = sock.recvfrom(20)[0]
+
+			buf = sock.gets
+			#test if socket closed
+			if buf == nil or buf.index("quit") == 0 then
+				sock.close
+				buf = "user disconected"
+				socks.delete(sock)
+			end
 			puts buf
+			
 			#send the reply
-			sock.puts("recievd msg: "+buf)	
+			socks.each do |socket|
+				if socket != s0 and socket != sock then
+					socket.puts("recievd msg: "+buf)
+				end
+			end	
 		end
 	end
 end
