@@ -11,13 +11,12 @@ res = ""
 s0 = TCPServer.open(port)
 
 while true
-	sock = s0.accept
-	s1 = TCPSocket.open(host, ports)
-	while buf = sock.gets
-		puts buf
-		s1.write(buf)
+	Thread.fork(s0.accept) do |sock|
+		while buf = sock.gets
+			puts buf
+			sock.puts(buf)
+		end		
 	end
-	
 end
 #sock.close
 #s0.close
